@@ -1,0 +1,162 @@
+/* Estilos Generales */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+/* Estilos de cards y paneles */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  font-weight: 600;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Estilos para filtros */
+.filters-section {
+  background-color: #f0f5ff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.filters-section .btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.filters-section .btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+/* Estilos para tablas */
+.table-responsive {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: #f1f1f1;
+  border-bottom: 2px solid #dee2e6;
+  color: #495057;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Estilos para gráficos */
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Estilos para badges y etiquetas */
+.badge-category {
+  font-size: 0.85em;
+  padding: 5px 8px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+  border-radius: 15px;
+}
+
+/* Estilos para botones de exportación */
+.export-buttons {
+  margin-bottom: 15px;
+}
+
+.export-buttons .btn {
+  margin-right: 5px;
+}
+
+/* Estilos para cards de estadísticas */
+.stat-card {
+  border-left: 4px solid #0d6efd;
+  background-color: white;
+}
+
+.stat-card .stat-icon {
+  font-size: 2rem;
+  color: #0d6efd;
+}
+
+.stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.stat-card .stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Estilos para colores de estado */
+.status-programado {
+  color: #0d6efd;
+}
+
+.status-en-curso {
+  color: #198754;
+}
+
+.status-finalizado {
+  color: #6c757d;
+}
+
+.status-cancelado {
+  color: #dc3545;
+}
+
+/* Estilos para loaders */
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0d6efd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos para mensajes de error/sin datos */
+.no-data-message {
+  text-align: center;
+  padding: 30px;
+  color: #6c757d;
+  font-style: italic;
+}
