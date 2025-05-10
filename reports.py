@@ -565,8 +565,16 @@ def get_dashboard_stats():
         COUNT(CASE WHEN estado = 'finalizado' THEN 1 END) AS eventos_finalizados
     FROM eventos
     """
-    eventos_stats = execute_query(query_eventos)[0]
-    stats['eventos'] = eventos_stats
+    eventos_stats = execute_query(query_eventos)
+    if eventos_stats and len(eventos_stats) > 0:
+        stats['eventos'] = eventos_stats[0]
+    else:
+        stats['eventos'] = {
+            'total_eventos': 0,
+            'eventos_programados': 0,
+            'eventos_en_curso': 0,
+            'eventos_finalizados': 0
+        }
     
     # Total de entradas y asistencias
     query_entradas = """
@@ -576,8 +584,15 @@ def get_dashboard_stats():
         SUM(precio_pagado) AS ingresos_totales
     FROM entradas
     """
-    entradas_stats = execute_query(query_entradas)[0]
-    stats['entradas'] = entradas_stats
+    entradas_stats = execute_query(query_entradas)
+    if entradas_stats and len(entradas_stats) > 0:
+        stats['entradas'] = entradas_stats[0]
+    else:
+        stats['entradas'] = {
+            'total_entradas': 0,
+            'total_asistencias': 0,
+            'ingresos_totales': 0
+        }
     
     # Categorías más populares
     query_categorias = """
@@ -587,11 +602,11 @@ def get_dashboard_stats():
         COUNT(DISTINCT en.entrada_id) AS total_entradas
     FROM 
         categorias c
-    JOIN 
+    LEFT JOIN 
         evento_categorias ec ON c.categoria_id = ec.categoria_id
-    JOIN 
+    LEFT JOIN 
         eventos e ON ec.evento_id = e.evento_id
-    JOIN 
+    LEFT JOIN 
         entradas en ON e.evento_id = en.evento_id
     GROUP BY 
         c.categoria_id
@@ -599,7 +614,7 @@ def get_dashboard_stats():
         total_entradas DESC
     LIMIT 5
     """
-    stats['categorias_populares'] = execute_query(query_categorias)
+    stats['categorias_populares'] = execute_query(query_categorias) or []
     
     # Próximos eventos
     query_proximos = """
@@ -625,6 +640,6 @@ def get_dashboard_stats():
         fecha_inicio
     LIMIT 5
     """
-    stats['proximos_eventos'] = execute_query(query_proximos)
+    stats['proximos_eventos'] = execute_query(query_proximos) or []
     
     return stats

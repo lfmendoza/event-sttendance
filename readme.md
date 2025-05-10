@@ -34,7 +34,21 @@ Un sistema completo para la gestión de eventos culturales, con generación de r
 - PostgreSQL 12 o superior
 - Conexión a internet (para cargar bibliotecas CDN)
 
-## Instalación
+## Instalación con Docker
+
+Para facilitar la instalación y evitar problemas de configuración, puedes utilizar Docker Compose para ejecutar todo el sistema en contenedores:
+
+1. **Requisitos:**
+
+   - Docker
+   - Docker Compose
+
+2. **Iniciar el sistema:**
+   ```bash
+   docker-compose up -d
+   ```
+
+## Instalación Local
 
 1. **Clonar el repositorio:**
 

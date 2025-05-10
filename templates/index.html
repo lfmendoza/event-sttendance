@@ -1,5 +1,22 @@
 {% extends 'layout.html' %} {% block title %}Dashboard - Sistema de Gestión de
 Eventos Culturales{% endblock %} {% block content %}
+<!-- Mensaje de advertencia si no hay datos -->
+{% if stats['eventos']['total_eventos'] == 0 and
+stats['entradas']['total_entradas'] == 0 %}
+<div class="alert alert-warning" role="alert">
+  <h4 class="alert-heading">¡Base de datos vacía!</h4>
+  <p>
+    Parece que la base de datos no contiene registros. Es posible que los
+    scripts de inicialización no se hayan ejecutado correctamente.
+  </p>
+  <hr />
+  <p class="mb-0">
+    Verifica los logs de Docker con <code>docker-compose logs db</code> para más
+    información.
+  </p>
+</div>
+{% endif %}
+
 <div class="row">
   <div class="col-12">
     <h1 class="mb-4"><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
@@ -14,7 +31,7 @@ Eventos Culturales{% endblock %} {% block content %}
         <div class="row">
           <div class="col-8">
             <div class="stat-value">
-              {{ stats['eventos']['total_eventos'] }}
+              {{ stats['eventos']['total_eventos'] or 0 }}
             </div>
             <div class="stat-label">Eventos Totales</div>
           </div>
@@ -34,7 +51,7 @@ Eventos Culturales{% endblock %} {% block content %}
         <div class="row">
           <div class="col-8">
             <div class="stat-value">
-              {{ stats['eventos']['eventos_programados'] }}
+              {{ stats['eventos']['eventos_programados'] or 0}}
             </div>
             <div class="stat-label">Eventos Programados</div>
           </div>
@@ -54,7 +71,7 @@ Eventos Culturales{% endblock %} {% block content %}
         <div class="row">
           <div class="col-8">
             <div class="stat-value">
-              {{ stats['entradas']['total_entradas'] }}
+              {{ stats['entradas']['total_entradas'] or 0}}
             </div>
             <div class="stat-label">Entradas Vendidas</div>
           </div>
@@ -240,12 +257,12 @@ Eventos Culturales{% endblock %} {% block content %}
 {% endblock %} {% block extra_js %}
 <script>
   // Datos para gráficos
-  const categoriesData = {{ stats['categorias_populares']|tojson }};
+  const categoriesData = {{ stats['categorias_populares']|tojson or '[]' }};
   const eventsStatusData = {
-      programados: {{ stats['eventos']['eventos_programados'] }},
-      en_curso: {{ stats['eventos']['eventos_en_curso'] }},
-      finalizados: {{ stats['eventos']['eventos_finalizados'] }},
-      total: {{ stats['eventos']['total_eventos'] }}
+      programados: {{ stats['eventos']['eventos_programados'] or 0 }},
+      en_curso: {{ stats['eventos']['eventos_en_curso'] or 0}},
+      finalizados: {{ stats['eventos']['eventos_finalizados'] or 0 }},
+      total: {{ stats['eventos']['total_eventos'] or 0}}
   };
 
   // Configurar gráfico de categorías

@@ -24,24 +24,24 @@ def get_db_connection():
 def execute_query(query, params=None, fetch=True):
     """
     Ejecuta una consulta SQL y opcionalmente recupera los resultados.
-    
-    Args:
-        query (str): Consulta SQL a ejecutar
-        params (tuple, optional): Parámetros para la consulta
-        fetch (bool, optional): Si es True, recupera y devuelve los resultados
-        
-    Returns:
-        list: Lista de registros (si fetch=True) o None (si fetch=False)
     """
     conn = None
     try:
         conn = get_db_connection()
         with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+            print(f"Ejecutando consulta: {query}")
+            print(f"Parámetros: {params}")
             cur.execute(query, params)
             if fetch:
-                return cur.fetchall()
+                results = cur.fetchall()
+                print(f"Resultados: {len(results)} filas")
+                return results
     except Exception as e:
         print(f"Error en la consulta: {e}")
+        print(f"Query: {query}")
+        print(f"Params: {params}")
+        if conn:
+            conn.rollback()
         return [] if fetch else None
     finally:
         if conn:
